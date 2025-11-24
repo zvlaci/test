@@ -21,11 +21,17 @@ ingress:
   # IMPORTANT: This annotation tells AGIC to manage this Ingress resource
   annotations: 
     kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/health-probe-path: /
+    appgw.ingress.kubernetes.io/backend-path-prefix: /
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
   # Change this host to a domain you own or a dummy domain for AGIC setup
   host: chart-example.local
   paths:
     - path: /
       pathType: Prefix
+  tls:
+    enabled: true
+    secretName: chart-tls-secret
 
 resources:
   # We usually recommend not to set defaults for limits and requests to keep them flexible
