@@ -31,7 +31,6 @@ ingress:
       pathType: Prefix
   tls:
     enabled: true
-    secretName: chart-tls-secret
 
 resources:
   # We usually recommend not to set defaults for limits and requests to keep them flexible
