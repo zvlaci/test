@@ -1,8 +1,8 @@
 # Default values for hello-chart.
 # This is a YAML-formatted file.
 autoscaling:
-  enabled: false
-replicaCount: 1
+  enabled: true
+replicaCount: 2
 
 image:
   repository: nginxdemos/hello
