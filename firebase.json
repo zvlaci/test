@@ -8,14 +8,7 @@
     ],
     "rewrites": [
       {
-        "source": "/settings**", 
-        "run": {
-          "serviceId": "dinner-backend",
-          "region": "europe-west2"
-        }
-      },
-      {
-        "source": "/activity/**",
+        "regex": "^/(activity.*|settings(/.*)?|users/.*|groups(/.*)?)$",
         "run": {
           "serviceId": "dinner-backend",
           "region": "europe-west2"
