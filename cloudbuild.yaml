@@ -1,16 +1,20 @@
 steps:
-# 1. Install dependencies
+  # 1. Install dependencies
   - name: 'node:20'
+    id: 'Install'
     entrypoint: 'npm'
     args: ['install']
 
-  # 2. Build the production files (creates the /dist folder)
+  # 2. Build the production files
   - name: 'node:20'
+    id: 'Build'
     entrypoint: 'npm'
     args: ['run', 'build']
 
   # 3. Deploy to Firebase Hosting
-  - name: 'gcr.io/$PROJECT_ID/firebase' # Uses the Firebase community builder
+  # Using the official Google-managed Firebase CLI image
+  - name: 'us-docker.pkg.dev/firebase-cli/us/firebase'
+    id: 'Deploy'
     args: ['deploy', '--project=$PROJECT_ID', '--only=hosting']
 
 options:
