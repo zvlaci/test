@@ -1,0 +1,36 @@
+steps:
+  # Build Docker image 
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t', 'europe-west2-docker.pkg.dev/$PROJECT_ID/dinner-repo/dinner-frontend',
+      '.'
+    ]
+
+  # Push image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      'europe-west2-docker.pkg.dev/$PROJECT_ID/dinner-repo/dinner-frontend'
+    ]
+
+  # Deploy Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      [
+        'run', 'deploy', 'dinner-frontend',
+        '--image', 'europe-west2-docker.pkg.dev/$PROJECT_ID/dinner-repo/dinner-frontend',
+        '--region', 'europe-west2',
+        '--platform', 'managed',
+        '--allow-unauthenticated',
+        '--memory', '4Gi',
+        '--cpu', '2',
+        '--port', '80'
+      ]
+
+images:
+  - 'europe-west2-docker.pkg.dev/$PROJECT_ID/dinner-repo/dinner-frontend'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
